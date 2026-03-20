@@ -56,11 +56,11 @@ cd veltro-invoice
 npm install
 ```
 
-Add your Supabase credentials in `src/lib/supabase.ts`:
+Add your Supabase credentials in `.env`:
 
-```typescript
-export const SUPABASE_URL = "your-project-url"
-export const SUPABASE_ANON_KEY = "your-anon-key"
+```env
+VITE_SUPABASE_URL=your-project-url
+VITE_SUPABASE_ANON_KEY=your-anon-key
 ```
 
 Run the SQL schema (located in the comment block at the top of `src/lib/supabase.ts`) in your Supabase SQL Editor, then:
