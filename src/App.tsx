@@ -1,57 +1,30 @@
-import './index.css'
-import { useDocumentState } from './hooks/useDocumentState'
-import { AppHeader } from './components/AppHeader'
-import { FormPanel } from './components/FormPanel'
-import { PreviewPanel } from './components/PreviewPanel'
-import { ActionBar } from './components/ActionBar'
+import { Navigate, Route, Routes } from 'react-router-dom'
+import { useAuth } from './context/AuthContext'
+import { AppLayout } from './layout/AppLayout'
+import { AuthPage } from './routes/AuthPage'
+import { ClientsPage } from './routes/clients/ClientsPage'
+import { DashboardPage } from './routes/dashboard/DashboardPage'
+import { DocumentEditorPage } from './routes/editor/DocumentEditorPage'
+import { HistoryPage } from './routes/history/HistoryPage'
 
-function App() {
-  const { state, dispatch, totals, validate, derived } = useDocumentState()
-
-  return (
-    <div className="app-root">
-      <AppHeader
-        documentType={state.meta.type}
-        documentTypeLabel={derived.documentTypeLabel}
-        onChangeType={(type) => dispatch({ type: 'SET_TYPE', payload: type })}
-      />
-
-      <main className="app-main" aria-label="Veltro Invoice workspace">
-        <FormPanel state={state} dispatch={dispatch} totals={totals} derived={derived} />
-        <PreviewPanel state={state} totals={totals} derived={derived} />
-      </main>
-
-      <ActionBar
-        state={state}
-        validate={validate}
-        dispatch={dispatch}
-      />
-
-      <footer
-        style={{
-          marginTop: 16,
-          fontSize: 12,
-          color: 'var(--color-text-secondary)',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        <span>A Veltro Product</span>
-        <span>
-          Built by Veltro ·{' '}
-          <a
-            href="https://veltrolabs.io"
-            target="_blank"
-            rel="noreferrer"
-            style={{ color: 'var(--color-accent)', textDecoration: 'none' }}
-          >
-            veltro.io
-          </a>
-        </span>
-      </footer>
-    </div>
-  )
+function Guarded() {
+  const { session, loading } = useAuth()
+  if (loading) return <div className="auth-wrap">Loading...</div>
+  if (!session) return <Navigate to="/auth" replace />
+  return <AppLayout />
 }
 
-export default App
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/auth" element={<AuthPage />} />
+      <Route path="/" element={<Guarded />}>
+        <Route index element={<DashboardPage />} />
+        <Route path="new" element={<DocumentEditorPage />} />
+        <Route path="history" element={<HistoryPage />} />
+        <Route path="clients" element={<ClientsPage />} />
+      </Route>
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  )
+}
