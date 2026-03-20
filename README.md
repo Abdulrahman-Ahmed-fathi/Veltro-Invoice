@@ -1,73 +1,95 @@
-# React + TypeScript + Vite
+# Veltro Invoice
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![React](https://img.shields.io/badge/React_18-61DAFB?style=flat&logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat&logo=supabase&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
 
-Currently, two official plugins are available:
+A production-grade invoice and quotation web app for freelancers and small businesses. Built with React, TypeScript, and Supabase. Fully bilingual — English and Arabic with true RTL support.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+**[Live Demo →](https://veltro.io)**
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Screenshots
 
-## Expanding the ESLint configuration
+| Dashboard | Invoice Editor |
+|---|---|
+| ![Dashboard](./screenshots/dashboard.png) | ![Editor](./screenshots/editor.png) |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| Document Preview | Arabic / RTL Mode |
+|---|---|
+| ![Preview](./screenshots/preview.png) | ![Arabic](./screenshots/arabic.png) |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+> To add screenshots: create a `/screenshots` folder in the root of the project and drop in your images with the filenames above.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Tech Stack
+
+- **Frontend** — React 18, TypeScript, Vite
+- **Database & Auth** — Supabase (PostgreSQL + Row Level Security)
+- **PDF Export** — html2canvas + jsPDF
+- **Icons** — Lucide React
+- **Fonts** — Inter / Noto Sans Arabic
+
+---
+
+## Key Features
+
+- Create invoices and quotations with a live document preview
+- Dashboard with total invoiced, paid, pending, and overdue stats
+- Full invoice history with search, filter, and status tracking
+- Client address book with auto-fill on new documents
+- Status workflow: Draft → Sent → Paid / Accepted / Declined
+- PDF export and print support
+- English / Arabic toggle with full RTL layout
+- Protected auth flow — each user sees only their own data
+
+---
+
+## Local Setup
+
+```bash
+git clone https://github.com/veltro/veltro-invoice.git
+cd veltro-invoice
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-jnbjdsnfjnbsdfnkjf
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Add your Supabase credentials in `src/lib/supabase.ts`:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```typescript
+export const SUPABASE_URL = "your-project-url"
+export const SUPABASE_ANON_KEY = "your-anon-key"
 ```
+
+Run the SQL schema (located in the comment block at the top of `src/lib/supabase.ts`) in your Supabase SQL Editor, then:
+
+```bash
+npm run dev
+```
+
+---
+
+## Project Structure
+
+```
+src/
+├── context/        # Auth, Language, Toast providers
+├── i18n/           # EN + AR translation strings
+├── lib/            # Supabase client + SQL schema
+├── routes/         # Dashboard, Editor, History, Clients, Auth
+├── services/       # Auth, Invoice, Client CRUD
+├── types/          # TypeScript models
+└── utils/          # Calculation helpers
+```
+
+---
+
+## License
+
+MIT — feel free to use, modify, and build on this project.
+
+---
+
+A product by [Veltro](https://veltro.io) — a digital studio building web apps and AI-powered tools.
