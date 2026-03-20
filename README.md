@@ -7,21 +7,15 @@
 
 A production-grade invoice and quotation web app for freelancers and small businesses. Built with React, TypeScript, and Supabase. Fully bilingual — English and Arabic with true RTL support.
 
-**[Live Demo →](https://veltro.io)**
+
 
 ---
 
 ## Screenshots
 
-| Dashboard | Invoice Editor |
-|---|---|
-| ![Dashboard](./screenshots/dashboard.png) | ![Editor](./screenshots/editor.png) |
-
-| Document Preview | Arabic / RTL Mode |
-|---|---|
-| ![Preview](./screenshots/preview.png) | ![Arabic](./screenshots/arabic.png) |
-
-> To add screenshots: create a `/screenshots` folder in the root of the project and drop in your images with the filenames above.
+| Dashboard | Invoice Editor | Sign Up |
+|---|---|---|
+| ![Dashboard](./screenshots/dashboard.png) | ![Editor](./screenshots/editor.png) | ![Sign Up](./screenshots/signup.png) |
 
 ---
 
@@ -56,12 +50,14 @@ cd veltro-invoice
 npm install
 ```
 
-Add your Supabase credentials in `.env`:
+Create a `.env` file in the root of the project:
 
 ```env
 VITE_SUPABASE_URL=your-project-url
 VITE_SUPABASE_ANON_KEY=your-anon-key
 ```
+
+> The `.env` file is listed in `.gitignore` — your credentials will never be committed to the repository.
 
 Run the SQL schema (located in the comment block at the top of `src/lib/supabase.ts`) in your Supabase SQL Editor, then:
 
@@ -86,10 +82,5 @@ src/
 
 ---
 
-## License
-
-MIT — feel free to use, modify, and build on this project.
-
----
 
 A product by [Veltro](https://veltro.io) — a digital studio building web apps and AI-powered tools.
